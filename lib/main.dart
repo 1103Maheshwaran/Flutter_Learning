@@ -68,6 +68,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _reset(){
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -115,21 +127,35 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Stack(
+      children: [
+        Positioned(
+          bottom: 90 + MediaQuery.of(context).padding.bottom, // Account for safe area
+          right: 20,
+      child: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomAppBar(
+        child: const Icon(Icons.plus_one),
+      ),
+        ),
+        Positioned(
+          bottom: 20 + MediaQuery.of(context).padding.bottom, // Account for safe area
+          right: 20,
+          child: FloatingActionButton(
+            onPressed: _decrementCounter,
+            tooltip: 'Decrement',
+            child: const Icon(Icons.exposure_minus_1),
+          ),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+    ]),
+    bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              icon: const Icon(Icons.home, color: Colors.indigoAccent,),
-              onPressed: () {
-                // Handle home button press
-              },),
+              icon: const Icon(Icons.refresh, color: Colors.indigoAccent,),
+              onPressed:_reset,
+               ),
         IconButton(
         icon:  const Icon(Icons.search, color: Colors.indigoAccent,),
         onPressed: (){
